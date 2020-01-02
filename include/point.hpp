@@ -1,11 +1,14 @@
 #ifndef QT_POINT_HPP
 #define QT_POINT_HPP
 
+#include <iostream>
+
 namespace qt {
 	struct point {
-		int x, y;
+		float x, y;
 
-		point(int x = 0, int y = 0);
+		point();
+		point(float x, float y);
 	};
 }
 

@@ -5,10 +5,10 @@
 
 namespace qt {
 	struct node {
-		int x, y, w, h;
+		float x, y, w, h;
 
-		node(int x = 0, int y = 0, int w = 0, int h = 0);
-		node(point &p, int w, int h);
+		node(float x = 0, float y = 0, float w = 0, float h = 0);
+		node(point &p, float w, float h);
 	
 		bool containsPoint(point &p);
 	};
