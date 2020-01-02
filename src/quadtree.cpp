@@ -2,11 +2,7 @@
 
 #include <iostream>
 
-qt::QuadTree::QuadTree(){
-	boundary = node(0, 0, 0, 0);
-
-	init();
-}
+qt::QuadTree::QuadTree() {}
 
 qt::QuadTree::QuadTree(node boundary) : boundary(boundary) {
 	init();
