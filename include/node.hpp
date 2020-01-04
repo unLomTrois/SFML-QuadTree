@@ -11,6 +11,7 @@ namespace qt {
 		node(point &p, float w, float h);
 	
 		bool containsPoint(point &p);
+		bool intersectNode(node node);
 	};
 }
 

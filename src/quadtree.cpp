@@ -110,3 +110,40 @@ void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
 
 	window->draw(node);
 }
+
+std::vector<qt::point*> qt::QuadTree::query(node node){
+	std::vector<qt::point*> ret;
+
+	if (!boundary.intersectNode(node)){
+		return ret;
+	} else {
+		if (!is_divided){
+			for(auto&& point : points) {
+				if (node.containsPoint(*point)){
+					//amountOfPoints++;
+					ret.push_back(point);
+
+					// point->color = sf::Color::Magenta;
+					// point->radius = 4;
+				}
+			}
+		} else {
+			std::vector<qt::point*> nwRet = nw->query(node);
+			std::vector<qt::point*> neRet = ne->query(node);
+			std::vector<qt::point*> swRet = sw->query(node);
+			std::vector<qt::point*> seRet = se->query(node);
+
+			ret.insert(ret.end(), nwRet.begin(), nwRet.end());
+			ret.insert(ret.end(), neRet.begin(), neRet.end());
+			ret.insert(ret.end(), swRet.begin(), swRet.end());
+			ret.insert(ret.end(), seRet.begin(), seRet.end());
+		}
+	}
+
+	for(auto&& p : ret) {
+		p->color = sf::Color::Green;
+		p->radius = 4;
+	}
+
+	return ret;
+}

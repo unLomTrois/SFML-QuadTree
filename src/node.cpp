@@ -12,3 +12,12 @@ bool qt::node::containsPoint(point &p){
 		return false;
 	}
 }
+
+bool qt::node::intersectNode(node node){
+	return !(
+		node.x - node.w > x + w || 
+		node.x + node.w < x - w ||
+		node.y - node.h > y + h ||
+		node.y + node.h < y - h
+	);
+}

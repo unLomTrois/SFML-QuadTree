@@ -20,6 +20,7 @@ namespace qt {
 		//функции
 		bool insert(point *p);
 		void subdivide();
+		std::vector<qt::point*> query(node node);
 
 		void show(sf::RenderWindow *window, sf::Color color);
 

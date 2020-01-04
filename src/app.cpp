@@ -21,7 +21,7 @@ void app::base(){
 
 	qt::point::init(1000);
 
-	for (int i = 0; i < 0; ++i){
+	for (int i = 0; i < 100; ++i){
 		qt::point::create(random(10, 720), random(10, 720));
 	}
 	
@@ -32,6 +32,8 @@ void app::base(){
 }
 
 void app::show(){
+	qt::node check(random(10, 720), random(10, 720), random(500), random(500));
+
 	while (window->isOpen()){
 		sf::Event event;
 		while (window->pollEvent(event)){
@@ -51,20 +53,20 @@ void app::show(){
 				}
 
 				if (event.mouseButton.button == sf::Mouse::Right) {
-					std::cout << qt::point::vect.capacity() << std::endl;
+					std::cout << "query in cyan range: " << qt.query(check).size() << std::endl;
 				}
 			}
-		
 		}
 
 		window->clear(sf::Color::Black);
 
 		qt.show(window, sf::Color::Transparent);
-		
+		showNode(window, check, sf::Color::Cyan);
+
 		for(auto&& point : qt::point::vect) {
 			sf::CircleShape c(point.radius, 4);
 			c.setFillColor(point.color);
-			c.setPosition(point.x, point.y);
+			c.setPosition(point.x - point.radius, point.y - point.radius);
 
 			window->draw(c);
 		}
@@ -79,16 +81,17 @@ void app::showNode(sf::RenderWindow *window, qt::node node, sf::Color color){
 	
 	rectNode.setFillColor(sf::Color::Transparent);
 	rectNode.setOutlineColor(color);
+	
+	rectNode.setPosition(
+		node.x - node.w,
+		node.y - node.h
+	);
+
 	rectNode.setSize(
 		sf::Vector2f(
 			node.w * 2, 
 			node.h * 2
 		)
-	);
-
-	rectNode.setPosition(
-		node.x - node.w, 
-		node.y - node.h
 	);
 	
 	window->draw(rectNode);
