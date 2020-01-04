@@ -2,6 +2,7 @@
 #define QT_POINT_HPP
 
 #include <iostream>
+#include <vector>
 
 namespace qt {
 	struct point {
@@ -9,6 +10,13 @@ namespace qt {
 
 		point();
 		point(float x, float y);
+		~point();
+
+
+		static int count;
+		static std::vector<point> vect;
+		static void create(float x, float y);
+		static void init(int cap);
 	};
 }
 

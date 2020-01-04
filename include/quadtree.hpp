@@ -1,25 +1,13 @@
 #ifndef QT_TREE_H
 #define QT_TREE_H
 
-// #include <cstddef>
-// #include <iostream>
+#include <vector>
 
-#include <string>
-
-#include "point.hpp"
 #include "node.hpp"
+#include "point.hpp"
 
 namespace qt {
 	class QuadTree {
-	private:	
-		int pointsAmount = 0;
-		static const int pointsCapacity = 4;
-		void init();
-
-		point *points;
-
-		std::string corner = "base";
-		void setCorner(std::string corn);
 	public:
 		QuadTree();
 		QuadTree(node boundary);
@@ -29,6 +17,7 @@ namespace qt {
 		void subdivide();
 		bool is_divided = false; //проверка на деление
 
+		// std::vector<char> v = {'a'};
 		//Потомки
 		
 		QuadTree *nw;
@@ -36,8 +25,14 @@ namespace qt {
 		QuadTree *sw;
 		QuadTree *se;
 		
-		bool insert(point &p);
+		//функции
+		bool insert(point *p);
+	private:
+		static unsigned int capacity;
+		void init();
 
+		// point points;
+		std::vector<point*> points;
 	};
 }
 

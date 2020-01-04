@@ -1,9 +1,7 @@
 #include "app.hpp"
 
-#include "point.hpp"
-#include "node.hpp"
-
 #include <iostream>
+
 #include "random.hpp"
 
 app::app(unsigned int w, unsigned int h){
@@ -19,15 +17,16 @@ app::~app(){
 }
 
 void app::base(){
-
 	qt = qt::QuadTree(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
-	for (int i = 0; i < 100; ++i){
-		points.emplace_back(qt::point(random(10, 720), random(10, 720)));
-	}
+	qt::point::init(1000);
 
-	for(auto&& point : points) {
-		qt.insert(point);
+	for (int i = 0; i < 0; ++i){
+		qt::point::create(random(10, 720), random(10, 720));
+	}
+	
+	for(auto&& point : qt::point::vect) {
+		qt.insert(&point);
 	}
 
 }
@@ -42,29 +41,27 @@ void app::show(){
 
 			if (event.type == sf::Event::MouseButtonPressed) {
 				if (event.mouseButton.button == sf::Mouse::Left) {
-					qt::point temp = qt::point(
+					
+					qt::point::create(
 						sf::Mouse::getPosition(*window).x, 
 						sf::Mouse::getPosition(*window).y
 					);
 
-					if (qt.insert(temp)){
-						points.emplace_back(
-							temp
-						);
-					}
+					qt.insert(&qt::point::vect.back());
 				}
 
 				if (event.mouseButton.button == sf::Mouse::Right) {
-
+					std::cout << qt::point::vect.capacity() << std::endl;
 				}
 			}
+		
 		}
 
 		window->clear(sf::Color::Black);
 
 		showNodes(window, &qt, sf::Color::Transparent);
-
-		for(auto&& point : points) {
+	
+		for(auto&& point : qt::point::vect) {
 			sf::CircleShape c(2, 4);
 			c.setFillColor(sf::Color::Red);
 			c.setPosition(point.x, point.y);
