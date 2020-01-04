@@ -17,7 +17,7 @@ public:
 
 	void base();
 	void show();
-	void showNodes(sf::RenderWindow *window, qt::QuadTree *qt, sf::Color color = sf::Color::Green);
+	void showNode(sf::RenderWindow *window, qt::node node, sf::Color color);
 
 private:
 	qt::node size;

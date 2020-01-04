@@ -72,3 +72,24 @@ void app::show(){
 		window->display();
 	}
 }
+
+void app::showNode(sf::RenderWindow *window, qt::node node, sf::Color color){
+	sf::RectangleShape rectNode;
+	rectNode.setOutlineThickness(-2.f);
+	
+	rectNode.setFillColor(sf::Color::Transparent);
+	rectNode.setOutlineColor(color);
+	rectNode.setSize(
+		sf::Vector2f(
+			node.w * 2, 
+			node.h * 2
+		)
+	);
+
+	rectNode.setPosition(
+		node.x - node.w, 
+		node.y - node.h
+	);
+	
+	window->draw(rectNode);
+}
