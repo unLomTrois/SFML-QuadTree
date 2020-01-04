@@ -62,8 +62,8 @@ void app::show(){
 		qt.show(window, sf::Color::Transparent);
 		
 		for(auto&& point : qt::point::vect) {
-			sf::CircleShape c(2, 4);
-			c.setFillColor(sf::Color::Red);
+			sf::CircleShape c(point.radius, 4);
+			c.setFillColor(point.color);
 			c.setPosition(point.x, point.y);
 
 			window->draw(c);
