@@ -1,6 +1,8 @@
 #ifndef QT_TREE_H
 #define QT_TREE_H
 
+#include <SFML/Graphics.hpp>
+
 #include <vector>
 
 #include "node.hpp"
@@ -13,26 +15,29 @@ namespace qt {
 		QuadTree(node boundary);
 		~QuadTree();
 
-		node boundary;
-		void subdivide();
 		bool is_divided = false; //проверка на деление
-
-		// std::vector<char> v = {'a'};
-		//Потомки
 		
+		//функции
+		bool insert(point *p);
+		void subdivide();
+
+		void show(sf::RenderWindow *window, sf::Color color);
+
+	private:
+		static unsigned int capacity;
+
+		node boundary;
+
+		//Потомки
 		QuadTree *nw;
 		QuadTree *ne;
 		QuadTree *sw;
 		QuadTree *se;
-		
-		//функции
-		bool insert(point *p);
-	private:
-		static unsigned int capacity;
-		void init();
 
-		// point points;
 		std::vector<point*> points;
+
+		// функции
+		void init();
 	};
 }
 

@@ -81,3 +81,32 @@ bool qt::QuadTree::insert(point *p){
 
 	return ret;
 }
+
+void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
+	sf::RectangleShape node;
+	node.setOutlineThickness(-1.f);
+	
+	node.setFillColor(sf::Color::Transparent);
+	node.setOutlineColor(color);
+	node.setSize(
+		sf::Vector2f(
+			boundary.w * 2, 
+			boundary.h * 2
+		)
+	);
+
+	node.setPosition(
+		boundary.x - boundary.w, 
+		boundary.y - boundary.h
+	);
+	
+	
+	if (is_divided){
+		nw->show(window, sf::Color::Red);
+		ne->show(window, sf::Color::Blue);
+		sw->show(window, sf::Color::Yellow);
+		se->show(window, sf::Color::White);
+	}
+
+	window->draw(node);
+}

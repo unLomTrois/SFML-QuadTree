@@ -59,8 +59,8 @@ void app::show(){
 
 		window->clear(sf::Color::Black);
 
-		showNodes(window, &qt, sf::Color::Transparent);
-	
+		qt.show(window, sf::Color::Transparent);
+		
 		for(auto&& point : qt::point::vect) {
 			sf::CircleShape c(2, 4);
 			c.setFillColor(sf::Color::Red);
@@ -72,32 +72,3 @@ void app::show(){
 		window->display();
 	}
 }
-
-void app::showNodes(sf::RenderWindow *window, qt::QuadTree *qt, sf::Color color){
-	sf::RectangleShape node;
-	node.setOutlineThickness(-1.f);
-	
-	node.setFillColor(sf::Color::Transparent);
-	node.setOutlineColor(color);
-	node.setSize(
-		sf::Vector2f(
-			qt->boundary.w * 2, 
-			qt->boundary.h * 2
-		)
-	);
-
-	node.setPosition(
-		qt->boundary.x - qt->boundary.w, 
-		qt->boundary.y - qt->boundary.h
-	);
-	
-	
-	if (qt->is_divided){
-		showNodes(window, qt->nw, sf::Color::Red);
-		showNodes(window, qt->ne, sf::Color::Blue);
-		showNodes(window, qt->sw, sf::Color::Yellow);
-		showNodes(window, qt->se, sf::Color::White);
-	}
-
-	window->draw(node);
-};
