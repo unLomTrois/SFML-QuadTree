@@ -32,7 +32,10 @@ void app::base(){
 }
 
 void app::show(){
-	qt::node check(random(10, 720), random(10, 720), random(500), random(500));
+	qt::node check(random(10, 720), random(10, 720), random(200), random(200));
+
+	sf::Font font;
+	font.loadFromFile("../res/fonts/arial.ttf");
 
 	while (window->isOpen()){
 		sf::Event event;
@@ -60,7 +63,7 @@ void app::show(){
 
 		window->clear(sf::Color::Black);
 
-		qt.show(window, sf::Color::Transparent);
+		qt.show(window, sf::Color::Transparent, font);
 		showNode(window, check, sf::Color::Cyan);
 
 		for(auto&& point : qt::point::vect) {

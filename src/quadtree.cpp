@@ -1,6 +1,7 @@
 #include "quadtree.hpp"
 
 #include <iostream>
+#include <string>
 
 unsigned int qt::QuadTree::capacity = 4;
 
@@ -82,7 +83,7 @@ bool qt::QuadTree::insert(point *p){
 	return ret;
 }
 
-void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
+void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color, sf::Font &font){
 	sf::RectangleShape node;
 	node.setOutlineThickness(-1.f);
 	
@@ -102,10 +103,18 @@ void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
 	
 	
 	if (is_divided){
-		nw->show(window, sf::Color::Red);
-		ne->show(window, sf::Color::Blue);
-		sw->show(window, sf::Color::Yellow);
-		se->show(window, sf::Color::White);
+		nw->show(window, sf::Color::Red, font);
+		ne->show(window, sf::Color::Blue, font);
+		sw->show(window, sf::Color::Yellow, font);
+		se->show(window, sf::Color::White, font);
+	} else { // draw a size of points-vector
+		sf::Text text(std::to_string(points.size()), font);
+		text.setCharacterSize(10);
+		text.setStyle(sf::Text::Bold);
+		text.setFillColor(sf::Color::White);
+		text.setPosition(boundary.x, boundary.y);
+
+		window->draw(text);
 	}
 
 	window->draw(node);

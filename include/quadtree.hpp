@@ -22,7 +22,7 @@ namespace qt {
 		void subdivide();
 		std::vector<qt::point*> query(node node);
 
-		void show(sf::RenderWindow *window, sf::Color color);
+		void show(sf::RenderWindow *window, sf::Color color, sf::Font &font);
 
 	private:
 		static unsigned int capacity;
