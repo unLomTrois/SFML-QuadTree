@@ -29,11 +29,15 @@ namespace qt {
 
 		node boundary;
 
+		static QuadTree *root; // корень
+
+		QuadTree *parent = nullptr; // родитель
+
 		//Потомки
-		QuadTree *nw;
-		QuadTree *ne;
-		QuadTree *sw;
-		QuadTree *se;
+		QuadTree *nw = nullptr;
+		QuadTree *ne = nullptr;
+		QuadTree *sw = nullptr;
+		QuadTree *se = nullptr;
 
 		std::vector<point*> points;
 

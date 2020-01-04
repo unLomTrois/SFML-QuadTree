@@ -5,9 +5,9 @@
 
 unsigned int qt::QuadTree::capacity = 4;
 
-qt::QuadTree::QuadTree() {
-	init();
-}
+qt::QuadTree* qt::QuadTree::root = nullptr; //корень
+
+qt::QuadTree::QuadTree() {}
 
 qt::QuadTree::QuadTree(node boundary) : boundary(boundary) {
 	init();
@@ -25,10 +25,9 @@ qt::QuadTree::~QuadTree(){
 void qt::QuadTree::init(){
 	points.reserve(capacity);
 
-	nw = nullptr;
-	ne = nullptr;
-	sw = nullptr;
-	se = nullptr;
+	if (root == nullptr){ //Инициализация рута у первого объекта
+		root = this;
+	}
 }
 
 void qt::QuadTree::subdivide(){
@@ -44,6 +43,11 @@ void qt::QuadTree::subdivide(){
 	sw = new QuadTree(node(x - w/2, y + h/2, w/2, h/2));
 	se = new QuadTree(node(x + w/2, y + h/2, w/2, h/2));
 
+	nw->parent = this;
+	ne->parent = this;
+	sw->parent = this;
+	se->parent = this;
+
 	for(auto&& point : points) {
 		nw->insert(point);
 		ne->insert(point);
@@ -52,7 +56,6 @@ void qt::QuadTree::subdivide(){
 	}
 
 	points.clear();
-	// pointsAmount = NULL;
 }
 
 
