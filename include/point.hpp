@@ -17,9 +17,7 @@ namespace qt {
 		point(float x, float y);
 		~point();
 
-
-		static int count;
-		static std::vector<point> vect;
+		static std::vector<point> points;
 		static void create(float x, float y);
 		static void init(int cap);
 	};

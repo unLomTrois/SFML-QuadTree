@@ -25,7 +25,7 @@ void app::base(){
 		qt::point::create(random(10, 720), random(10, 720));
 	}
 	
-	for(auto&& point : qt::point::vect) {
+	for(auto&& point : qt::point::points) {
 		qt.insert(&point);
 	}
 
@@ -52,7 +52,7 @@ void app::show(){
 						sf::Mouse::getPosition(*window).y
 					);
 
-					qt.insert(&qt::point::vect.back());
+					qt.insert(&qt::point::points.back());
 				}
 
 				if (event.mouseButton.button == sf::Mouse::Right) {
@@ -66,7 +66,7 @@ void app::show(){
 		qt.show(window, sf::Color::Transparent, font);
 		showNode(window, check, sf::Color::Cyan);
 
-		for(auto&& point : qt::point::vect) {
+		for(auto&& point : qt::point::points) {
 			sf::CircleShape c(point.radius, 4);
 			c.setFillColor(point.color);
 			c.setPosition(point.x - point.radius, point.y - point.radius);
