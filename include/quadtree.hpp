@@ -10,6 +10,7 @@
 
 namespace qt {
 	class QuadTree {
+		friend point;
 	public:
 		QuadTree();
 		QuadTree(node boundary);
@@ -22,16 +23,20 @@ namespace qt {
 		void subdivide();
 		std::vector<qt::point*> query(node node);
 
-		void show(sf::RenderWindow *window, sf::Color color, sf::Font &font);
+		void show(sf::RenderWindow *window, sf::Color color);
+
+		void update(point *p);
+
+		static void init(QuadTree &bindRoot);
+		void updateChildren();
 
 	private:
 		static unsigned int capacity;
+		static QuadTree *root; // корень
 
 		node boundary;
 
-		static QuadTree *root; // корень
-
-		QuadTree *parent = nullptr; // родитель
+		QuadTree *parent = this; // родитель
 
 		//Потомки
 		QuadTree *nw = nullptr;
@@ -41,8 +46,7 @@ namespace qt {
 
 		std::vector<point*> points;
 
-		// функции
-		void init();
+		
 	};
 }
 

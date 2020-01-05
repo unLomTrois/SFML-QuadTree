@@ -1,9 +1,9 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include "point.hpp"
-
 namespace qt {
+	struct point;
+
 	struct node {
 		float x, y, w, h;
 
@@ -14,5 +14,7 @@ namespace qt {
 		bool intersectNode(node node);
 	};
 }
+
+#include "point.hpp"
 
 #endif // NODE_HPP

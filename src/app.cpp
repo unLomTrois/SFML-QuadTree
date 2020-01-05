@@ -6,6 +6,7 @@
 
 app::app(unsigned int w, unsigned int h){
 	window = new sf::RenderWindow(sf::VideoMode(w, h), "SFML-QuadTree");
+	window->setFramerateLimit(60);
 
 	size = qt::node(0, 0, w, h);
 
@@ -18,13 +19,14 @@ app::~app(){
 
 void app::base(){
 	qt = qt::QuadTree(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
+	qt::QuadTree::init(qt);
 
-	qt::point::init(1000);
+	qt::point::init(2000, qt);
 
-	for (int i = 0; i < 100; ++i){
+	for (int i = 0; i < 1000; ++i){
 		qt::point::create(random(10, 720), random(10, 720));
 	}
-	
+
 	for(auto&& point : qt::point::points) {
 		qt.insert(&point);
 	}
@@ -32,12 +34,13 @@ void app::base(){
 }
 
 void app::show(){
-	qt::node check(random(10, 720), random(10, 720), random(200), random(200));
+	// qt::node check(random(10, 720), random(10, 720), random(200), random(200));
 
-	sf::Font font;
-	font.loadFromFile("../res/fonts/arial.ttf");
+	sf::Time time;
+	sf::Clock clock;
 
 	while (window->isOpen()){
+
 		sf::Event event;
 		while (window->pollEvent(event)){
 			if (event.type == sf::Event::Closed){
@@ -56,22 +59,24 @@ void app::show(){
 				}
 
 				if (event.mouseButton.button == sf::Mouse::Right) {
-					std::cout << "query in cyan range: " << qt.query(check).size() << std::endl;
+					
 				}
 			}
 		}
 
 		window->clear(sf::Color::Black);
 
-		qt.show(window, sf::Color::Transparent, font);
-		showNode(window, check, sf::Color::Cyan);
+		time = clock.getElapsedTime();
+	    clock.restart().asSeconds();
+		std::cout << 1.0f/time.asSeconds() << std::endl;
+
+		// qt.show(window, sf::Color::Transparent);
+		// showNode(window, check, sf::Color::Cyan);
 
 		for(auto&& point : qt::point::points) {
-			sf::CircleShape c(point.radius, 4);
-			c.setFillColor(point.color);
-			c.setPosition(point.x - point.radius, point.y - point.radius);
+			point.move();
 
-			window->draw(c);
+			window->draw(point.c);
 		}
 	
 		window->display();

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 unsigned int qt::QuadTree::capacity = 4;
 
@@ -10,7 +11,7 @@ qt::QuadTree* qt::QuadTree::root = nullptr; //корень
 qt::QuadTree::QuadTree() {}
 
 qt::QuadTree::QuadTree(node boundary) : boundary(boundary) {
-	init();
+	points.reserve(capacity);
 }
 
 qt::QuadTree::~QuadTree(){
@@ -22,12 +23,8 @@ qt::QuadTree::~QuadTree(){
 	}
 }
 
-void qt::QuadTree::init(){
-	points.reserve(capacity);
-
-	if (root == nullptr){ //Инициализация рута у первого объекта
-		root = this;
-	}
+void qt::QuadTree::init(QuadTree &bindRoot){
+	root = &bindRoot;
 }
 
 void qt::QuadTree::subdivide(){
@@ -60,7 +57,7 @@ void qt::QuadTree::subdivide(){
 
 
 bool qt::QuadTree::insert(point *p){
-	bool ret;
+	bool ret = false;
 
 	if (!boundary.containsPoint(*p)){
 		ret = false;
@@ -68,6 +65,7 @@ bool qt::QuadTree::insert(point *p){
 		if (!is_divided){
 			if (points.size() < capacity){
 				points.push_back(p);
+				p->bindQT = this;
 				
 				ret = true;
 			}
@@ -86,41 +84,71 @@ bool qt::QuadTree::insert(point *p){
 	return ret;
 }
 
-void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color, sf::Font &font){
-	sf::RectangleShape node;
-	node.setOutlineThickness(-1.f);
-	
-	node.setFillColor(sf::Color::Transparent);
-	node.setOutlineColor(color);
-	node.setSize(
-		sf::Vector2f(
-			boundary.w * 2, 
-			boundary.h * 2
-		)
-	);
+void qt::QuadTree::update(point *p){
+	std::vector<qt::point*>::iterator itr = std::find(points.begin(), points.end(), p);
 
-	node.setPosition(
-		boundary.x - boundary.w, 
-		boundary.y - boundary.h
-	);
-	
-	
-	if (is_divided){
-		nw->show(window, sf::Color::Red, font);
-		ne->show(window, sf::Color::Blue, font);
-		sw->show(window, sf::Color::Yellow, font);
-		se->show(window, sf::Color::White, font);
-	} else { // draw a size of points-vector
-		sf::Text text(std::to_string(points.size()), font);
-		text.setCharacterSize(10);
-		text.setStyle(sf::Text::Bold);
-		text.setFillColor(sf::Color::White);
-		text.setPosition(boundary.x, boundary.y);
+	// int id = std::distance(points.begin(), itr);
+	// std::cout << id << std::endl;
 
-		window->draw(text);
+	if (!boundary.containsPoint(*p)){
+		points.erase(itr);
+		root->insert(p);
+
+		parent->updateChildren();
 	}
+}
 
-	window->draw(node);
+void qt::QuadTree::updateChildren(){
+	if (is_divided) {
+		std::vector<qt::point*> que = query(boundary);
+
+		if (que.size() < 4){
+			
+			delete nw;
+			delete ne;
+			delete sw;
+			delete se;
+
+			is_divided = false;
+
+			for(auto&& point : que) {
+				parent->insert(point);
+			}
+		} else {
+			nw->updateChildren();
+			ne->updateChildren();
+			sw->updateChildren();
+			se->updateChildren();
+		}
+	}
+}
+
+void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
+	if (is_divided){
+		nw->show(window, sf::Color::Red);
+		ne->show(window, sf::Color::Blue);
+		sw->show(window, sf::Color::Yellow);
+		se->show(window, sf::Color::White);
+	} else {
+		sf::RectangleShape node;
+		node.setOutlineThickness(-1.f);
+
+		node.setFillColor(sf::Color::Transparent);
+		node.setOutlineColor(color);
+		node.setSize(
+			sf::Vector2f(
+				boundary.w * 2, 
+				boundary.h * 2
+			)
+		);
+
+		node.setPosition(
+			boundary.x - boundary.w, 
+			boundary.y - boundary.h
+		);
+
+		window->draw(node);
+	}
 }
 
 std::vector<qt::point*> qt::QuadTree::query(node node){
@@ -132,11 +160,7 @@ std::vector<qt::point*> qt::QuadTree::query(node node){
 		if (!is_divided){
 			for(auto&& point : points) {
 				if (node.containsPoint(*point)){
-					//amountOfPoints++;
 					ret.push_back(point);
-
-					// point->color = sf::Color::Magenta;
-					// point->radius = 4;
 				}
 			}
 		} else {
@@ -150,11 +174,6 @@ std::vector<qt::point*> qt::QuadTree::query(node node){
 			ret.insert(ret.end(), swRet.begin(), swRet.end());
 			ret.insert(ret.end(), seRet.begin(), seRet.end());
 		}
-	}
-
-	for(auto&& p : ret) {
-		p->color = sf::Color::Green;
-		p->radius = 4;
 	}
 
 	return ret;
