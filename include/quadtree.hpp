@@ -16,7 +16,7 @@ namespace qt {
 		QuadTree(node boundary);
 		~QuadTree();
 
-		bool is_divided = false; //проверка на деление
+		bool is_divided = false;
 		
 		//функции
 		bool insert(point *p);
@@ -29,7 +29,6 @@ namespace qt {
 
 		static void init(QuadTree *bindRoot);
 		static QuadTree *root;
-		bool is_updated;
 
 		void collide();
 
@@ -38,7 +37,7 @@ namespace qt {
 
 		node boundary;
 
-		QuadTree *parent = this; // родитель
+		QuadTree *parent = this;
 
 		//Потомки
 		QuadTree *nw = nullptr;

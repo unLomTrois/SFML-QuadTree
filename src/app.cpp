@@ -50,21 +50,19 @@ void app::show(){
 						sf::Mouse::getPosition(*window).x, 
 						sf::Mouse::getPosition(*window).y
 					);
-
-					// qt->insert(qt::point::points.back());
 				}
 			}
 
-			if (event.type == sf::Event::MouseMoved){
+			/*if (event.type == sf::Event::MouseMoved){
 				check.x = sf::Mouse::getPosition(*window).x;
 				check.y = sf::Mouse::getPosition(*window).y;
-			}
+			}*/
 		}
 
 		window->clear(sf::Color::Black);
 
 		// qt->show(window, sf::Color::Transparent);
-		showNode(window, check, sf::Color::Cyan);
+		// showNode(window, check, sf::Color::Cyan);
 
 		for(auto&& point : qt::point::points) {
 			point->move();
@@ -74,7 +72,7 @@ void app::show(){
 				
 		qt->collide();
 
-		for(auto&& point : qt->query(check)) {
+		for(auto&& point : qt::point::points) {
 			window->draw(point->c);
 		}
 
@@ -83,7 +81,7 @@ void app::show(){
 
 		time = clock.getElapsedTime();
 	    clock.restart().asSeconds();
-		// std::cout << 1.0f/time.asSeconds() << std::endl;
+		std::cout << 1.0f/time.asSeconds() << std::endl;
 	}
 }
 

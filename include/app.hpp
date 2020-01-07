@@ -22,7 +22,6 @@ public:
 private:
 	qt::node size;
 	sf::RenderWindow *window;
-	// std::vector<qt::point*> points;
 	qt::QuadTree *qt;
 };
 

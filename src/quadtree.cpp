@@ -100,8 +100,6 @@ void qt::QuadTree::update(){
 			}
 		}
 	}
-
-	// updateChildren();
 }
 
 void qt::QuadTree::clear(){
@@ -126,32 +124,6 @@ void qt::QuadTree::collide(){
 		}
 	}
 }
-/*
-void qt::QuadTree::updateChildren(){
-	if (is_divided) {
-		std::vector<qt::point*> que = query(boundary);
-
-		if (que.size() < 4){
-			
-			delete nw;
-			delete ne;
-			delete sw;
-			delete se;
-
-			is_divided = false;
-
-			for(auto&& point : que) {
-				parent->insert(point);
-			}
-		} else {
-			nw->updateChildren();
-			ne->updateChildren();
-			sw->updateChildren();
-			se->updateChildren();
-		}
-	}
-}
-*/
 
 void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
 	if (is_divided){
