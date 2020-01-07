@@ -11,6 +11,10 @@ qt::QuadTree::QuadTree() {}
 
 qt::QuadTree::QuadTree(node boundary) : boundary(boundary) {
 	points.reserve(capacity);
+
+	if (root == nullptr) {
+		root = this;
+	}
 }
 
 qt::QuadTree::~QuadTree(){
@@ -21,10 +25,6 @@ qt::QuadTree::~QuadTree(){
 		delete se;
 	}
 	points.clear();
-}
-
-void qt::QuadTree::init(QuadTree *bindRoot){
-	root = bindRoot;
 }
 
 void qt::QuadTree::subdivide(){

@@ -27,7 +27,6 @@ namespace qt {
 
 		void update();
 
-		static void init(QuadTree *bindRoot);
 		static QuadTree *root;
 
 		void collide();
