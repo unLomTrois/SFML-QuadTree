@@ -17,10 +17,10 @@ public:
 
 	void base();
 	void show();
-	void showNode(sf::RenderWindow *window, qt::node node, sf::Color color);
+	void showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color);
 
 private:
-	qt::node size;
+	qt::node<qt::point> size;
 	sf::RenderWindow *window;
 	qt::QuadTree<qt::point> *qt;
 };

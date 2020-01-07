@@ -11,7 +11,7 @@ app::app(unsigned int w, unsigned int h){
 	window = new sf::RenderWindow(sf::VideoMode(w, h), "SFML-QuadTree");
 	window->setFramerateLimit(60);
 
-	size = qt::node(0, 0, w, h);
+	size = qt::node<qt::point>(0, 0, w, h);
 
 	base();
 }
@@ -21,7 +21,7 @@ app::~app(){
 }
 
 void app::base(){
-	qt = new qt::QuadTree<qt::point>(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
+	qt = new qt::QuadTree<qt::point>(qt::node<qt::point>(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
 	for (int i = 0; i < 1000; ++i){
 		qt::point::create(random(10, 720), random(10, 720));
@@ -29,7 +29,7 @@ void app::base(){
 }
 
 void app::show(){
-	qt::node check(100, 100, 100, 100);
+	qt::node<qt::point> check(100, 100, 100, 100);
 
 	sf::Time time;
 	sf::Clock clock;
@@ -84,7 +84,7 @@ void app::show(){
 	}
 }
 
-void app::showNode(sf::RenderWindow *window, qt::node node, sf::Color color){
+void app::showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color){
 	sf::RectangleShape rectNode;
 	rectNode.setOutlineThickness(-2.f);
 	

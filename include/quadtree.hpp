@@ -14,14 +14,14 @@ namespace qt {
 		friend T;
 	public:
 		QuadTree();
-		QuadTree(node boundary);
+		QuadTree(node<T> boundary);
 		~QuadTree();
 
 		
 		//функции
 		bool insert(T *p);
 		void subdivide();
-		std::vector<T*> query(node node);
+		std::vector<T*> query(node<T> node);
 
 		void update();
 		void collide();
@@ -41,7 +41,7 @@ namespace qt {
 		QuadTree<T> *se = nullptr;
 
 		std::vector<T*> points;
-		node boundary;
+		node<T> boundary;
 		bool is_divided = false;
 
 		void clear();

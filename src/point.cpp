@@ -45,7 +45,7 @@ void qt::point::move(){
 }
 
 bool qt::point::collide(){
-	std::vector<qt::point*> coll = qt::QuadTree<qt::point>::root->query(qt::node(x, y, radius*2.5, radius*2.5));
+	std::vector<qt::point*> coll = qt::QuadTree<qt::point>::root->query(qt::node<qt::point>(x, y, radius*2.5, radius*2.5));
 
 	if (coll[0] == this && coll.size() == 1) {		
 		is_collided = false;

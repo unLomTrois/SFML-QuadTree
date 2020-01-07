@@ -1,10 +1,15 @@
 #include "node.hpp"
 
-qt::node::node(float x, float y, float w, float h) : x(x), y(y), w(w), h(h) {}
+#include "point.hpp"
 
-qt::node::node(point &p, float w, float h) : x(p.x), y(p.y), w(w), h(h) {}
+template<typename T>
+qt::node<T>::node(float x, float y, float w, float h) : x(x), y(y), w(w), h(h) {}
 
-bool qt::node::containsPoint(point &p){
+template<typename T>
+qt::node<T>::node(T &p, float w, float h) : x(p.x), y(p.y), w(w), h(h) {}
+
+template<typename T>
+bool qt::node<T>::containsPoint(T &p){
 	if ((p.x >= x - w) && (p.y >= y - h) &&
 		(p.x <= x + w) && (p.y <= y + h)) {
 		return true;
@@ -13,7 +18,8 @@ bool qt::node::containsPoint(point &p){
 	}
 }
 
-bool qt::node::intersectNode(node node){
+template<typename T>
+bool qt::node<T>::intersectNode(node node){
 	return !(
 		node.x - node.w > x + w || 
 		node.x + node.w < x - w ||
@@ -21,3 +27,5 @@ bool qt::node::intersectNode(node node){
 		node.y + node.h < y - h
 	);
 }
+
+template class qt::node<qt::point>;

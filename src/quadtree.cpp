@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "point.hpp"
+
 template<typename T>
 unsigned int qt::QuadTree<T>::capacity = 4;
 
@@ -13,7 +15,7 @@ template<typename T>
 qt::QuadTree<T>::QuadTree() {}
 
 template<typename T>
-qt::QuadTree<T>::QuadTree(qt::node boundary) : boundary(boundary) {
+qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
 	points.reserve(capacity);
 
 	if (root == nullptr) {
@@ -41,10 +43,10 @@ void qt::QuadTree<T>::subdivide(){
 	float w = boundary.w;
 	float h = boundary.h;
 
-	nw = new QuadTree<T>(node(x - w/2, y - h/2, w/2, h/2));
-	ne = new QuadTree<T>(node(x + w/2, y - h/2, w/2, h/2));
-	sw = new QuadTree<T>(node(x - w/2, y + h/2, w/2, h/2));
-	se = new QuadTree<T>(node(x + w/2, y + h/2, w/2, h/2));
+	nw = new QuadTree<T>(node<T>(x - w/2, y - h/2, w/2, h/2));
+	ne = new QuadTree<T>(node<T>(x + w/2, y - h/2, w/2, h/2));
+	sw = new QuadTree<T>(node<T>(x - w/2, y + h/2, w/2, h/2));
+	se = new QuadTree<T>(node<T>(x + w/2, y + h/2, w/2, h/2));
 
 	nw->parent = this;
 	ne->parent = this;
@@ -100,7 +102,7 @@ void qt::QuadTree<T>::update(){
 	if (is_divided){
 		clear();
 	
-		for(auto&& point : qt::point::points) {			
+		for(auto&& point : T::points) {			
 			while (!insert(point)){
 				point->move();
 			}
@@ -163,7 +165,7 @@ void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color){
 }
 
 template<typename T>
-std::vector<T*> qt::QuadTree<T>::query(node node){
+std::vector<T*> qt::QuadTree<T>::query(node<T> node){
 	std::vector<T*> ret;
 
 	if (!boundary.intersectNode(node)){
@@ -176,10 +178,10 @@ std::vector<T*> qt::QuadTree<T>::query(node node){
 				}
 			}
 		} else {
-			std::vector<qt::point*> nwRet = nw->query(node);
-			std::vector<qt::point*> neRet = ne->query(node);
-			std::vector<qt::point*> swRet = sw->query(node);
-			std::vector<qt::point*> seRet = se->query(node);
+			std::vector<T*> nwRet = nw->query(node);
+			std::vector<T*> neRet = ne->query(node);
+			std::vector<T*> swRet = sw->query(node);
+			std::vector<T*> seRet = se->query(node);
 
 			ret.insert(ret.end(), nwRet.begin(), nwRet.end());
 			ret.insert(ret.end(), neRet.begin(), neRet.end());
