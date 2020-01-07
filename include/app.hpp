@@ -5,10 +5,10 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Window.hpp>
 
-#include "point.hpp"
-#include "node.hpp"
-#include "quadtree.hpp"
 
+#include "quadtree.hpp"
+#include "node.hpp"
+#include "point.hpp"
 
 class app {
 public:
@@ -22,7 +22,7 @@ public:
 private:
 	qt::node size;
 	sf::RenderWindow *window;
-	qt::QuadTree *qt;
+	qt::QuadTree<qt::point> *qt;
 };
 
 #endif // APP_HPP

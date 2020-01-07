@@ -3,13 +3,17 @@
 #include <iostream>
 #include <string>
 
-unsigned int qt::QuadTree::capacity = 4;
+template<typename T>
+unsigned int qt::QuadTree<T>::capacity = 4;
 
-qt::QuadTree* qt::QuadTree::root = nullptr; //корень
+template<typename T>
+qt::QuadTree<T>* qt::QuadTree<T>::root = nullptr; //корень
 
-qt::QuadTree::QuadTree() {}
+template<typename T>
+qt::QuadTree<T>::QuadTree() {}
 
-qt::QuadTree::QuadTree(node boundary) : boundary(boundary) {
+template<typename T>
+qt::QuadTree<T>::QuadTree(qt::node boundary) : boundary(boundary) {
 	points.reserve(capacity);
 
 	if (root == nullptr) {
@@ -17,7 +21,8 @@ qt::QuadTree::QuadTree(node boundary) : boundary(boundary) {
 	}
 }
 
-qt::QuadTree::~QuadTree(){
+template<typename T>
+qt::QuadTree<T>::~QuadTree(){
 	if (is_divided){
 		delete nw;
 		delete ne;
@@ -27,7 +32,8 @@ qt::QuadTree::~QuadTree(){
 	points.clear();
 }
 
-void qt::QuadTree::subdivide(){
+template<typename T>
+void qt::QuadTree<T>::subdivide(){
 	is_divided = true;
 
 	float x = boundary.x;
@@ -35,10 +41,10 @@ void qt::QuadTree::subdivide(){
 	float w = boundary.w;
 	float h = boundary.h;
 
-	nw = new QuadTree(node(x - w/2, y - h/2, w/2, h/2));
-	ne = new QuadTree(node(x + w/2, y - h/2, w/2, h/2));
-	sw = new QuadTree(node(x - w/2, y + h/2, w/2, h/2));
-	se = new QuadTree(node(x + w/2, y + h/2, w/2, h/2));
+	nw = new QuadTree<T>(node(x - w/2, y - h/2, w/2, h/2));
+	ne = new QuadTree<T>(node(x + w/2, y - h/2, w/2, h/2));
+	sw = new QuadTree<T>(node(x - w/2, y + h/2, w/2, h/2));
+	se = new QuadTree<T>(node(x + w/2, y + h/2, w/2, h/2));
 
 	nw->parent = this;
 	ne->parent = this;
@@ -55,8 +61,8 @@ void qt::QuadTree::subdivide(){
 	points.clear();
 }
 
-
-bool qt::QuadTree::insert(point *p){
+template<typename T>
+bool qt::QuadTree<T>::insert(T *p){
 	bool ret = false;
 
 	if (!boundary.containsPoint(*p)){
@@ -90,7 +96,8 @@ bool qt::QuadTree::insert(point *p){
 	return ret;
 }
 
-void qt::QuadTree::update(){
+template<typename T>
+void qt::QuadTree<T>::update(){
 	if (is_divided){
 		clear();
 	
@@ -102,7 +109,8 @@ void qt::QuadTree::update(){
 	}
 }
 
-void qt::QuadTree::clear(){
+template<typename T>
+void qt::QuadTree<T>::clear(){
 	delete nw;
 	delete ne;
 	delete sw;
@@ -112,7 +120,8 @@ void qt::QuadTree::clear(){
 	points.clear();
 }
 
-void qt::QuadTree::collide(){
+template<typename T>
+void qt::QuadTree<T>::collide(){
 	if (is_divided){
 		nw->collide();
 		ne->collide();
@@ -125,7 +134,8 @@ void qt::QuadTree::collide(){
 	}
 }
 
-void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
+template<typename T>
+void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color){
 	if (is_divided){
 		nw->show(window, sf::Color::Red);
 		ne->show(window, sf::Color::Blue);
@@ -153,8 +163,9 @@ void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
 	}
 }
 
-std::vector<qt::point*> qt::QuadTree::query(node node){
-	std::vector<qt::point*> ret;
+template<typename T>
+std::vector<T*> qt::QuadTree<T>::query(node node){
+	std::vector<T*> ret;
 
 	if (!boundary.intersectNode(node)){
 
@@ -180,3 +191,5 @@ std::vector<qt::point*> qt::QuadTree::query(node node){
 
 	return ret;
 }
+
+template class qt::QuadTree<qt::point>;

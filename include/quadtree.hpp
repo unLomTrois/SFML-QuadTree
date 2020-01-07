@@ -9,6 +9,8 @@
 #include "point.hpp"
 
 namespace qt {
+
+	template<typename T>
 	class QuadTree {
 		friend point;
 	public:
@@ -18,9 +20,9 @@ namespace qt {
 
 		
 		//функции
-		bool insert(point *p);
+		bool insert(T *p);
 		void subdivide();
-		std::vector<qt::point*> query(node node);
+		std::vector<T*> query(node node);
 
 		void update();
 		void collide();
@@ -34,12 +36,12 @@ namespace qt {
 		QuadTree *parent = this;
 
 		//Потомки
-		QuadTree *nw = nullptr;
-		QuadTree *ne = nullptr;
-		QuadTree *sw = nullptr;
-		QuadTree *se = nullptr;
+		QuadTree<T> *nw = nullptr;
+		QuadTree<T> *ne = nullptr;
+		QuadTree<T> *sw = nullptr;
+		QuadTree<T> *se = nullptr;
 
-		std::vector<point*> points;
+		std::vector<T*> points;
 		node boundary;
 		bool is_divided = false;
 

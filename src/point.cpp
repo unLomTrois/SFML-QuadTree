@@ -24,7 +24,7 @@ qt::point::~point() {}
 void qt::point::create(float x, float y) {
 	points.emplace_back() = new qt::point(x, y);
 
-	while (!qt::QuadTree::root->insert(points.back())){
+	while (!qt::QuadTree<qt::point>::root->insert(points.back())){
 		points.back()->move();
 	}
 }
@@ -46,7 +46,7 @@ void qt::point::move(){
 }
 
 bool qt::point::collide(){
-	std::vector<qt::point*> coll = qt::QuadTree::root->query(qt::node(x, y, radius*2.5, radius*2.5));
+	std::vector<qt::point*> coll = qt::QuadTree<qt::point>::root->query(qt::node(x, y, radius*2.5, radius*2.5));
 
 	if (coll[0] == this && coll.size() == 1) {		
 		is_collided = false;

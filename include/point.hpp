@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Color.hpp>
 
 namespace qt {
+	template<typename T>
 	class QuadTree;
 }
 
@@ -30,7 +31,7 @@ namespace qt {
 		static std::vector<point*> points;
 		static void create(float x, float y);
 
-		QuadTree *bindqt;
+		QuadTree<point> *bindqt;
 
 		void move();
 		bool collide();

@@ -21,7 +21,7 @@ app::~app(){
 }
 
 void app::base(){
-	qt = new qt::QuadTree(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
+	qt = new qt::QuadTree<qt::point>(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
 	for (int i = 0; i < 1000; ++i){
 		qt::point::create(random(10, 720), random(10, 720));
