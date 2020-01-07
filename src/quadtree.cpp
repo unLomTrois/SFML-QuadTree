@@ -64,6 +64,12 @@ bool qt::QuadTree::insert(point *p){
 	} else {
 		if (!is_divided){
 			if (points.size() < capacity){
+				for(auto&& exP : points) {
+					if (p->x == exP->x && p->y == exP->y){
+						return false; //same pos
+					}
+				}
+
 				points.push_back(p);
 				p->bindqt = this;
 
@@ -88,9 +94,10 @@ void qt::QuadTree::update(){
 	if (is_divided){
 		clear();
 	
-		for(auto&& point : qt::point::points) {
-			insert(point);
-			// point->collide();
+		for(auto&& point : qt::point::points) {			
+			while (!insert(point)){
+				point->move();
+			}
 		}
 	}
 

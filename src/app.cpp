@@ -27,16 +27,6 @@ void app::base(){
 	for (int i = 0; i < 1000; ++i){
 		qt::point::create(random(10, 720), random(10, 720));
 	}
-
-	auto start = std::chrono::system_clock::now();
-
-	for(auto&& point : qt::point::points) {
-		qt->insert(point);
-	}
-	
-	auto end = std::chrono::system_clock::now();
-	auto fin = end - start;
-	std::cout << " Tree was structed in: " << std::chrono::duration_cast<std::chrono::milliseconds>(fin).count() << " milliseconds" << std::endl;
 }
 
 void app::show(){
@@ -61,7 +51,7 @@ void app::show(){
 						sf::Mouse::getPosition(*window).y
 					);
 
-					qt->insert(qt::point::points.back());
+					// qt->insert(qt::point::points.back());
 				}
 			}
 
@@ -93,7 +83,7 @@ void app::show(){
 
 		time = clock.getElapsedTime();
 	    clock.restart().asSeconds();
-		std::cout << 1.0f/time.asSeconds() << std::endl;
+		// std::cout << 1.0f/time.asSeconds() << std::endl;
 	}
 }
 

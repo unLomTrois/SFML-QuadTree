@@ -17,36 +17,36 @@ qt::point::point(float x, float y) : x(x), y(y) {
 	c.setPosition(x - radius, y - radius);
 
 	is_collided = false;
-	state = random(0, 1);
 }
 
 qt::point::~point() {}
 
 void qt::point::create(float x, float y) {
 	points.emplace_back() = new qt::point(x, y);
-}
 
-void qt::point::move(){
-	
-	if (state){
-		x += random(-1, 1);
-		y += random(-1, 1);
-
-		if (!(
-			x > 0 && x < 720 &&
-			y > 0 && y < 720
-			)){
-			
-			x = random(10, 710);
-			y = random(10, 710);
-		}
-
-		c.setPosition(x - radius, y - radius);
+	while (!qt::QuadTree::root->insert(points.back())){
+		points.back()->move();
 	}
 }
 
+void qt::point::move(){
+	x += random(-velocity, velocity);
+	y += random(-velocity, velocity);
+
+	if (!(
+		x > 0 && x < 720 &&
+		y > 0 && y < 720
+		)){
+		
+		x = random(10, 710);
+		y = random(10, 710);
+	}
+
+	c.setPosition(x - radius, y - radius);
+}
+
 bool qt::point::collide(){
-	std::vector<qt::point*> coll = qt::QuadTree::root->query(qt::node(x, y, radius*2, radius*2));
+	std::vector<qt::point*> coll = qt::QuadTree::root->query(qt::node(x, y, radius*2.5, radius*2.5));
 
 	if (coll[0] == this && coll.size() == 1) {		
 		is_collided = false;
