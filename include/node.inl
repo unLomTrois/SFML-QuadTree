@@ -1,7 +1,3 @@
-#include "node.hpp"
-
-#include "point.hpp"
-
 template<typename T>
 qt::node<T>::node(float x, float y, float w, float h) : x(x), y(y), w(w), h(h) {}
 
@@ -27,5 +23,3 @@ bool qt::node<T>::intersectNode(node node){
 		node.y + node.h < y - h
 	);
 }
-
-template class qt::node<qt::point>;

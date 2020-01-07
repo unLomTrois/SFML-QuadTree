@@ -48,4 +48,6 @@ namespace qt {
 	};
 }
 
+#include "quadtree.inl"
+
 #endif // QT_TREE_H

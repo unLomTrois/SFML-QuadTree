@@ -14,4 +14,6 @@ namespace qt {
 	};
 }
 
+#include "node.inl"
+
 #endif // NODE_HPP

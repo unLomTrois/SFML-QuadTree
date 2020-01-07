@@ -1,21 +1,14 @@
-#include "quadtree.hpp"
-
-#include <iostream>
-#include <string>
-
-#include "point.hpp"
-
 template<typename T>
 unsigned int qt::QuadTree<T>::capacity = 4;
 
 template<typename T>
-qt::QuadTree<T>* qt::QuadTree<T>::root = nullptr; //корень
+inline qt::QuadTree<T>* qt::QuadTree<T>::root = nullptr; //корень
 
 template<typename T>
-qt::QuadTree<T>::QuadTree() {}
+inline qt::QuadTree<T>::QuadTree() {}
 
 template<typename T>
-qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
+inline qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
 	points.reserve(capacity);
 
 	if (root == nullptr) {
@@ -24,7 +17,7 @@ qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
 }
 
 template<typename T>
-qt::QuadTree<T>::~QuadTree(){
+inline qt::QuadTree<T>::~QuadTree(){
 	if (is_divided){
 		delete nw;
 		delete ne;
@@ -35,7 +28,7 @@ qt::QuadTree<T>::~QuadTree(){
 }
 
 template<typename T>
-void qt::QuadTree<T>::subdivide(){
+inline void qt::QuadTree<T>::subdivide(){
 	is_divided = true;
 
 	float x = boundary.x;
@@ -64,7 +57,7 @@ void qt::QuadTree<T>::subdivide(){
 }
 
 template<typename T>
-bool qt::QuadTree<T>::insert(T *p){
+inline bool qt::QuadTree<T>::insert(T *p){
 	bool ret = false;
 
 	if (!boundary.containsPoint(*p)){
@@ -98,7 +91,7 @@ bool qt::QuadTree<T>::insert(T *p){
 }
 
 template<typename T>
-void qt::QuadTree<T>::update(){
+inline void qt::QuadTree<T>::update(){
 	if (is_divided){
 		clear();
 	
@@ -111,7 +104,7 @@ void qt::QuadTree<T>::update(){
 }
 
 template<typename T>
-void qt::QuadTree<T>::clear(){
+inline void qt::QuadTree<T>::clear(){
 	delete nw;
 	delete ne;
 	delete sw;
@@ -122,7 +115,7 @@ void qt::QuadTree<T>::clear(){
 }
 
 template<typename T>
-void qt::QuadTree<T>::collide(){
+inline void qt::QuadTree<T>::collide(){
 	if (is_divided){
 		nw->collide();
 		ne->collide();
@@ -136,7 +129,7 @@ void qt::QuadTree<T>::collide(){
 }
 
 template<typename T>
-void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color){
+inline void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color){
 	if (is_divided){
 		nw->show(window, sf::Color::Red);
 		ne->show(window, sf::Color::Blue);
@@ -165,7 +158,7 @@ void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color){
 }
 
 template<typename T>
-std::vector<T*> qt::QuadTree<T>::query(node<T> node){
+inline std::vector<T*> qt::QuadTree<T>::query(node<T> node){
 	std::vector<T*> ret;
 
 	if (!boundary.intersectNode(node)){
@@ -192,5 +185,3 @@ std::vector<T*> qt::QuadTree<T>::query(node<T> node){
 
 	return ret;
 }
-
-template class qt::QuadTree<qt::point>;
