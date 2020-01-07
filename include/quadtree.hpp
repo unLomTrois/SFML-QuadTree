@@ -25,14 +25,16 @@ namespace qt {
 
 		void show(sf::RenderWindow *window, sf::Color color);
 
-		void update(point *p);
+		void update();
 
-		static void init(QuadTree &bindRoot);
-		void updateChildren();
+		static void init(QuadTree *bindRoot);
+		static QuadTree *root;
+		bool is_updated;
+
+		void collide();
 
 	private:
 		static unsigned int capacity;
-		static QuadTree *root; // корень
 
 		node boundary;
 
@@ -46,7 +48,8 @@ namespace qt {
 
 		std::vector<point*> points;
 
-		
+		void clear();
+		void updateChildren();
 	};
 }
 

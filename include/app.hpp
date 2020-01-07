@@ -23,7 +23,7 @@ private:
 	qt::node size;
 	sf::RenderWindow *window;
 	// std::vector<qt::point*> points;
-	qt::QuadTree qt;
+	qt::QuadTree *qt;
 };
 
 #endif // APP_HPP

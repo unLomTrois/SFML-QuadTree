@@ -4,6 +4,9 @@
 
 #include "random.hpp"
 
+#include <chrono>
+
+
 app::app(unsigned int w, unsigned int h){
 	window = new sf::RenderWindow(sf::VideoMode(w, h), "SFML-QuadTree");
 	window->setFramerateLimit(60);
@@ -18,23 +21,26 @@ app::~app(){
 }
 
 void app::base(){
-	qt = qt::QuadTree(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
+	qt = new qt::QuadTree(qt::node(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 	qt::QuadTree::init(qt);
-
-	qt::point::init(2000, qt);
 
 	for (int i = 0; i < 1000; ++i){
 		qt::point::create(random(10, 720), random(10, 720));
 	}
 
-	for(auto&& point : qt::point::points) {
-		qt.insert(&point);
-	}
+	auto start = std::chrono::system_clock::now();
 
+	for(auto&& point : qt::point::points) {
+		qt->insert(point);
+	}
+	
+	auto end = std::chrono::system_clock::now();
+	auto fin = end - start;
+	std::cout << " Tree was structed in: " << std::chrono::duration_cast<std::chrono::milliseconds>(fin).count() << " milliseconds" << std::endl;
 }
 
 void app::show(){
-	// qt::node check(random(10, 720), random(10, 720), random(200), random(200));
+	qt::node check(100, 100, 100, 100);
 
 	sf::Time time;
 	sf::Clock clock;
@@ -55,31 +61,39 @@ void app::show(){
 						sf::Mouse::getPosition(*window).y
 					);
 
-					qt.insert(&qt::point::points.back());
+					qt->insert(qt::point::points.back());
 				}
+			}
 
-				if (event.mouseButton.button == sf::Mouse::Right) {
-					
-				}
+			if (event.type == sf::Event::MouseMoved){
+				check.x = sf::Mouse::getPosition(*window).x;
+				check.y = sf::Mouse::getPosition(*window).y;
 			}
 		}
 
 		window->clear(sf::Color::Black);
 
+		// qt->show(window, sf::Color::Transparent);
+		showNode(window, check, sf::Color::Cyan);
+
+		for(auto&& point : qt::point::points) {
+			point->move();
+		}
+
+		qt->update();
+				
+		qt->collide();
+
+		for(auto&& point : qt->query(check)) {
+			window->draw(point->c);
+		}
+
+	
+		window->display();
+
 		time = clock.getElapsedTime();
 	    clock.restart().asSeconds();
 		std::cout << 1.0f/time.asSeconds() << std::endl;
-
-		// qt.show(window, sf::Color::Transparent);
-		// showNode(window, check, sf::Color::Cyan);
-
-		for(auto&& point : qt::point::points) {
-			point.move();
-
-			window->draw(point.c);
-		}
-	
-		window->display();
 	}
 }
 

@@ -17,22 +17,22 @@ namespace qt {
 		float x, y;
 
 		sf::Color color = sf::Color::Red;
-		int radius = 2;
+		int radius = 5;
 		sf::CircleShape c;
+		bool is_collided;
+		bool state;
 
 		point();
 		point(float x, float y);
 		~point();
 
-		static std::vector<point> points;
+		static std::vector<point*> points;
 		static void create(float x, float y);
-		static void init(int cap, QuadTree &qt);
-		static QuadTree *rootQT;
 
-		QuadTree *bindQT;
+		QuadTree *bindqt;
 
 		void move();
-		void collide();
+		bool collide();
 	};
 }
 

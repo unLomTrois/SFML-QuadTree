@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include <algorithm>
 
 unsigned int qt::QuadTree::capacity = 4;
 
@@ -21,10 +20,11 @@ qt::QuadTree::~QuadTree(){
 		delete sw;
 		delete se;
 	}
+	points.clear();
 }
 
-void qt::QuadTree::init(QuadTree &bindRoot){
-	root = &bindRoot;
+void qt::QuadTree::init(QuadTree *bindRoot){
+	root = bindRoot;
 }
 
 void qt::QuadTree::subdivide(){
@@ -60,13 +60,13 @@ bool qt::QuadTree::insert(point *p){
 	bool ret = false;
 
 	if (!boundary.containsPoint(*p)){
-		ret = false;
+
 	} else {
 		if (!is_divided){
 			if (points.size() < capacity){
 				points.push_back(p);
-				p->bindQT = this;
-				
+				p->bindqt = this;
+
 				ret = true;
 			}
 
@@ -84,20 +84,42 @@ bool qt::QuadTree::insert(point *p){
 	return ret;
 }
 
-void qt::QuadTree::update(point *p){
-	std::vector<qt::point*>::iterator itr = std::find(points.begin(), points.end(), p);
-
-	// int id = std::distance(points.begin(), itr);
-	// std::cout << id << std::endl;
-
-	if (!boundary.containsPoint(*p)){
-		points.erase(itr);
-		root->insert(p);
-
-		parent->updateChildren();
+void qt::QuadTree::update(){
+	if (is_divided){
+		clear();
+	
+		for(auto&& point : qt::point::points) {
+			insert(point);
+			// point->collide();
+		}
 	}
+
+	// updateChildren();
 }
 
+void qt::QuadTree::clear(){
+	delete nw;
+	delete ne;
+	delete sw;
+	delete se;
+
+	is_divided = false;
+	points.clear();
+}
+
+void qt::QuadTree::collide(){
+	if (is_divided){
+		nw->collide();
+		ne->collide();
+		sw->collide();
+		se->collide();
+	} else {
+		for(auto&& point : points) {
+			point->collide();
+		}
+	}
+}
+/*
 void qt::QuadTree::updateChildren(){
 	if (is_divided) {
 		std::vector<qt::point*> que = query(boundary);
@@ -122,6 +144,7 @@ void qt::QuadTree::updateChildren(){
 		}
 	}
 }
+*/
 
 void qt::QuadTree::show(sf::RenderWindow *window, sf::Color color){
 	if (is_divided){
@@ -155,7 +178,7 @@ std::vector<qt::point*> qt::QuadTree::query(node node){
 	std::vector<qt::point*> ret;
 
 	if (!boundary.intersectNode(node)){
-		return ret;
+
 	} else {
 		if (!is_divided){
 			for(auto&& point : points) {
