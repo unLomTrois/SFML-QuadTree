@@ -16,25 +16,20 @@ namespace qt {
 		QuadTree(node boundary);
 		~QuadTree();
 
-		bool is_divided = false;
 		
 		//функции
 		bool insert(point *p);
 		void subdivide();
 		std::vector<qt::point*> query(node node);
 
-		void show(sf::RenderWindow *window, sf::Color color);
-
 		void update();
-
-		static QuadTree *root;
-
 		void collide();
+
+		void show(sf::RenderWindow *window, sf::Color color);
 
 	private:
 		static unsigned int capacity;
-
-		node boundary;
+		static QuadTree *root;
 
 		QuadTree *parent = this;
 
@@ -45,9 +40,10 @@ namespace qt {
 		QuadTree *se = nullptr;
 
 		std::vector<point*> points;
+		node boundary;
+		bool is_divided = false;
 
 		void clear();
-		void updateChildren();
 	};
 }
 
