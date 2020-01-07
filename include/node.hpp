@@ -1,9 +1,9 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-namespace qt {
-	struct point;
+#include "point.hpp"
 
+namespace qt {
 	struct node {
 		float x, y, w, h;
 
@@ -15,6 +15,5 @@ namespace qt {
 	};
 }
 
-#include "point.hpp"
 
 #endif // NODE_HPP

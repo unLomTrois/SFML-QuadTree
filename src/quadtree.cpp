@@ -77,7 +77,6 @@ bool qt::QuadTree<T>::insert(T *p){
 				}
 
 				points.push_back(p);
-				p->bindqt = this;
 
 				ret = true;
 			}

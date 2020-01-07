@@ -1,11 +1,10 @@
 #include "point.hpp"
 
-#include "random.hpp"
-
-#include <SFML/Graphics.hpp>
-
 #include <cmath>
 #include <chrono>
+
+#include "quadtree.hpp"
+#include "random.hpp"
 
 std::vector<qt::point*> qt::point::points;
 

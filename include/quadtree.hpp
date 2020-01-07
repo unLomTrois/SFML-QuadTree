@@ -6,13 +6,12 @@
 #include <vector>
 
 #include "node.hpp"
-#include "point.hpp"
 
 namespace qt {
 
 	template<typename T>
 	class QuadTree {
-		friend point;
+		friend T;
 	public:
 		QuadTree();
 		QuadTree(node boundary);
