@@ -8,18 +8,13 @@
 // get base random alias which is auto seeded and has static API and internal state
 using Random = effolkronium::random_static;
 
-application::application(unsigned int w, unsigned int h) {
-  window = new sf::RenderWindow(sf::VideoMode(w, h), "SFML-QuadTree");
+application::application(const sf::VideoMode &window_size) {
+  window = new sf::RenderWindow(window_size, "SFML-QuadTree");
   window->setFramerateLimit(60);
 
-  size = qt::node<qt::point>(0, 0, w, h);
+  size = qt::node<qt::point>(0, 0, window_size.width, window_size.height);
 
-  base();
-}
-
-application::~application() { delete window; }
-
-void application::base() {
+  // QT Init
   qt = new qt::QuadTree<qt::point>(
       qt::node<qt::point>(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
@@ -27,6 +22,8 @@ void application::base() {
     qt::point::create(Random::get(10, 720), Random::get(10, 720));
   }
 }
+
+application::~application() { delete window; }
 
 void application::show() {
   qt::node<qt::point> check(100, 100, 100, 100);

@@ -11,10 +11,9 @@
 
 class application {
  public:
-  application(unsigned int w = 800, unsigned int h = 800);
+  application(const sf::VideoMode &window_size);
   ~application();
 
-  void base();
   void show();
   void showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color);
 
