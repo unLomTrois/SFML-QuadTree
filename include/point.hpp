@@ -21,7 +21,7 @@ struct point {
   point(float x, float y);
   ~point();
 
-  static std::vector<point *> points;
+  static inline std::vector<point *> points;
   static void create(float x, float y);
 
   void move();

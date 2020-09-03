@@ -10,8 +10,6 @@
 // get base random alias which is auto seeded and has static API and internal state
 using Random = effolkronium::random_static;
 
-std::vector<qt::point *> qt::point::points;
-
 qt::point::point() {}
 
 qt::point::point(float x, float y) : x(x), y(y) {
