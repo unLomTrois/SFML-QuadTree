@@ -6,7 +6,7 @@ set(SFML_DIR ${PROJECT_SOURCE_DIR}/lib/SFML-2.5.1/lib/cmake/SFML)
 find_package(SFML 2.5.1 COMPONENTS graphics window REQUIRED)
 
 # application
-add_library(application STATIC app.cpp point.cpp random.cpp)
+add_library(application STATIC application.cpp point.cpp random.cpp)
 target_link_libraries(application sfml-graphics)
 
 # executable

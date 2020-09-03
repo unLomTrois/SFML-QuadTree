@@ -1,4 +1,4 @@
-#include "app.hpp"
+#include "application.hpp"
 
 int main() {
   app *application = new app(720, 720);
