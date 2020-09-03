@@ -1,8 +1,8 @@
 #include "application.hpp"
 
 int main() {
-  app *application = new app(720, 720);
-  application->show();
+  auto app = application(720, 720);
+  app.show();
 
   return 0;
 }

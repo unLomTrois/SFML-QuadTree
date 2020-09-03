@@ -1,5 +1,5 @@
-#ifndef APP_HPP
-#define APP_HPP
+#ifndef APPLICATION_HPP
+#define APPLICATION_HPP
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
@@ -9,10 +9,10 @@
 #include "point.hpp"
 #include "quadtree.hpp"
 
-class app {
+class application {
  public:
-  app(unsigned int w = 800, unsigned int h = 800);
-  ~app();
+  application(unsigned int w = 800, unsigned int h = 800);
+  ~application();
 
   void base();
   void show();
@@ -24,4 +24,4 @@ class app {
   qt::QuadTree<qt::point> *qt;
 };
 
-#endif  // APP_HPP
+#endif  // APPLICATION_HPP

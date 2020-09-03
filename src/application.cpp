@@ -6,7 +6,7 @@
 
 #include <chrono>
 
-app::app(unsigned int w, unsigned int h) {
+application::application(unsigned int w, unsigned int h) {
   window = new sf::RenderWindow(sf::VideoMode(w, h), "SFML-QuadTree");
   window->setFramerateLimit(60);
 
@@ -15,9 +15,9 @@ app::app(unsigned int w, unsigned int h) {
   base();
 }
 
-app::~app() { delete window; }
+application::~application() { delete window; }
 
-void app::base() {
+void application::base() {
   qt = new qt::QuadTree<qt::point>(
       qt::node<qt::point>(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
@@ -26,7 +26,7 @@ void app::base() {
   }
 }
 
-void app::show() {
+void application::show() {
   qt::node<qt::point> check(100, 100, 100, 100);
 
   sf::Time time;
@@ -76,7 +76,7 @@ void app::show() {
   }
 }
 
-void app::showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color) {
+void application::showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color) {
   sf::RectangleShape rectNode;
   rectNode.setOutlineThickness(-2.f);
 
