@@ -1,10 +1,12 @@
 #include "application.hpp"
 
+#include <chrono>
 #include <iostream>
 
-#include "random.hpp"
+#include "effolkronium/random.hpp"
 
-#include <chrono>
+// get base random alias which is auto seeded and has static API and internal state
+using Random = effolkronium::random_static;
 
 application::application(unsigned int w, unsigned int h) {
   window = new sf::RenderWindow(sf::VideoMode(w, h), "SFML-QuadTree");
@@ -22,7 +24,7 @@ void application::base() {
       qt::node<qt::point>(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
   for (int i = 0; i < 1000; ++i) {
-    qt::point::create(random(10, 720), random(10, 720));
+    qt::point::create(Random::get(10, 720), Random::get(10, 720));
   }
 }
 

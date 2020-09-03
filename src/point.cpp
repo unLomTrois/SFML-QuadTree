@@ -4,7 +4,11 @@
 #include <cmath>
 
 #include "quadtree.hpp"
-#include "random.hpp"
+
+#include "effolkronium/random.hpp"
+
+// get base random alias which is auto seeded and has static API and internal state
+using Random = effolkronium::random_static;
 
 std::vector<qt::point *> qt::point::points;
 
@@ -29,12 +33,12 @@ void qt::point::create(float x, float y) {
 }
 
 void qt::point::move() {
-  x += random(-velocity, velocity);
-  y += random(-velocity, velocity);
+  x += Random::get(-velocity, velocity);
+  y += Random::get(-velocity, velocity);
 
   if (!(x > 0 && x < 720 && y > 0 && y < 720)) {
-    x = random(10, 710);
-    y = random(10, 710);
+    x = Random::get(10, 710);
+    y = Random::get(10, 710);
   }
 
   c.setPosition(x - radius, y - radius);
