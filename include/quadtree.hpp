@@ -21,7 +21,7 @@ class QuadTree {
   //функции
   bool insert(T *p);
   void subdivide();
-  std::vector<T *> query(node<T> node);
+  std::vector<T *> query(const node<T> &node);
 
   void update();
   void collide();

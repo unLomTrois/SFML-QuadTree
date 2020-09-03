@@ -146,7 +146,7 @@ inline void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color) {
 }
 
 template <typename T>
-inline std::vector<T *> qt::QuadTree<T>::query(node<T> node) {
+inline std::vector<T *> qt::QuadTree<T>::query(const node<T> &node) {
   std::vector<T *> ret;
 
   if (!boundary.intersectNode(node)) {
