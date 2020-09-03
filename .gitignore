@@ -1,4 +1,5 @@
-*.exe
-*.o
-dev/
-*.dll
+# CMAKE
+build
+
+# Executables
+bin
