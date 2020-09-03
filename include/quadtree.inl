@@ -8,7 +8,7 @@ template <typename T>
 inline qt::QuadTree<T>::QuadTree() {}
 
 template <typename T>
-inline qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
+inline qt::QuadTree<T>::QuadTree(qt::node boundary) : boundary(boundary) {
   points.reserve(capacity);
 
   if (root == nullptr) {
@@ -36,10 +36,10 @@ inline void qt::QuadTree<T>::subdivide() {
   float w = boundary.w;
   float h = boundary.h;
 
-  nw = new QuadTree<T>(node<T>(x - w / 2, y - h / 2, w / 2, h / 2));
-  ne = new QuadTree<T>(node<T>(x + w / 2, y - h / 2, w / 2, h / 2));
-  sw = new QuadTree<T>(node<T>(x - w / 2, y + h / 2, w / 2, h / 2));
-  se = new QuadTree<T>(node<T>(x + w / 2, y + h / 2, w / 2, h / 2));
+  nw = new QuadTree<T>(qt::node(x - w / 2, y - h / 2, w / 2, h / 2));
+  ne = new QuadTree<T>(qt::node(x + w / 2, y - h / 2, w / 2, h / 2));
+  sw = new QuadTree<T>(qt::node(x - w / 2, y + h / 2, w / 2, h / 2));
+  se = new QuadTree<T>(qt::node(x + w / 2, y + h / 2, w / 2, h / 2));
 
   nw->parent = this;
   ne->parent = this;
@@ -146,7 +146,7 @@ inline void qt::QuadTree<T>::show(sf::RenderWindow *window, sf::Color color) {
 }
 
 template <typename T>
-inline std::vector<T *> qt::QuadTree<T>::query(const node<T> &node) {
+inline std::vector<T *> qt::QuadTree<T>::query(const node &node) {
   std::vector<T *> ret;
 
   if (!boundary.intersectNode(node)) {

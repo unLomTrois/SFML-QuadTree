@@ -15,13 +15,13 @@ class QuadTree {
 
  public:
   QuadTree();
-  QuadTree(node<T> boundary);
+  QuadTree(node boundary);
   ~QuadTree();
 
   //функции
   bool insert(T *p);
   void subdivide();
-  std::vector<T *> query(const node<T> &node);
+  std::vector<T *> query(const node &node);
 
   void update();
   void collide();
@@ -41,7 +41,7 @@ class QuadTree {
   QuadTree<T> *se = nullptr;
 
   std::vector<T *> points;
-  node<T> boundary;
+  node boundary;
   bool is_divided = false;
 
   void clear();

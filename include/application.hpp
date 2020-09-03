@@ -15,10 +15,10 @@ class application {
   ~application();
 
   void show();
-  void showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color);
+  void showNode(sf::RenderWindow *window, qt::node node, sf::Color color);
 
  private:
-  qt::node<qt::point> size;
+  qt::node size;
   sf::RenderWindow *window;
   qt::QuadTree<qt::point> *qt;
 };
