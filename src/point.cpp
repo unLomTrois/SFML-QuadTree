@@ -33,7 +33,6 @@ void qt::point::move() {
   y += random(-velocity, velocity);
 
   if (!(x > 0 && x < 720 && y > 0 && y < 720)) {
-
     x = random(10, 710);
     y = random(10, 710);
   }
@@ -42,8 +41,8 @@ void qt::point::move() {
 }
 
 bool qt::point::collide() {
-  std::vector<qt::point *> coll = qt::QuadTree<qt::point>::root->query(
-      qt::node<qt::point>(x, y, radius * 2.5, radius * 2.5));
+  std::vector<qt::point *> coll =
+      qt::QuadTree<qt::point>::root->query(qt::node<qt::point>(x, y, radius * 2.5, radius * 2.5));
 
   if (coll[0] == this && coll.size() == 1) {
     is_collided = false;
@@ -52,8 +51,7 @@ bool qt::point::collide() {
     unsigned int num = 1;
     for (auto &&p : coll) {
       if (p != this) {
-        if (sqrt((p->x - x) * (p->x - x) + (p->y - y) * (p->y - y)) <=
-            radius * 2) {
+        if (sqrt((p->x - x) * (p->x - x) + (p->y - y) * (p->y - y)) <= radius * 2) {
           is_collided = true;
         } else {
           num++;

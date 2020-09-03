@@ -6,7 +6,7 @@ int random(int max) {
   int min = 0;
   static bool first = true;
   if (first) {
-    std::srand(time(NULL)); // seeding for the first time only!
+    std::srand(time(NULL));  // seeding for the first time only!
     first = false;
   }
 
@@ -14,10 +14,9 @@ int random(int max) {
 }
 
 int random(int min, int max) {
-
   static bool first = true;
   if (first) {
-    std::srand(time(NULL)); // seeding for the first time only!
+    std::srand(time(NULL));  // seeding for the first time only!
     first = false;
   }
 

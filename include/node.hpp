@@ -2,7 +2,8 @@
 #define NODE_HPP
 
 namespace qt {
-template <typename T> struct node {
+template <typename T>
+struct node {
   float x, y, w, h;
 
   node(float x = 0, float y = 0, float w = 0, float h = 0);
@@ -11,8 +12,8 @@ template <typename T> struct node {
   bool containsPoint(T &p);
   bool intersectNode(node node);
 };
-} // namespace qt
+}  // namespace qt
 
 #include "node.inl"
 
-#endif // NODE_HPP
+#endif  // NODE_HPP

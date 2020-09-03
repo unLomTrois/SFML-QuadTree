@@ -33,7 +33,6 @@ void app::show() {
   sf::Clock clock;
 
   while (window->isOpen()) {
-
     sf::Event event;
     while (window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
@@ -42,9 +41,7 @@ void app::show() {
 
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-
-          qt::point::create(sf::Mouse::getPosition(*window).x,
-                            sf::Mouse::getPosition(*window).y);
+          qt::point::create(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
         }
       }
 
@@ -79,8 +76,7 @@ void app::show() {
   }
 }
 
-void app::showNode(sf::RenderWindow *window, qt::node<qt::point> node,
-                   sf::Color color) {
+void app::showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color) {
   sf::RectangleShape rectNode;
   rectNode.setOutlineThickness(-2.f);
 

@@ -27,6 +27,6 @@ struct point {
   void move();
   bool collide();
 };
-} // namespace qt
+}  // namespace qt
 
-#endif // QT_POINT_HPP
+#endif  // QT_POINT_HPP

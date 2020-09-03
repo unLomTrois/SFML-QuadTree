@@ -9,10 +9,11 @@
 
 namespace qt {
 
-template <typename T> class QuadTree {
+template <typename T>
+class QuadTree {
   friend T;
 
-public:
+ public:
   QuadTree();
   QuadTree(node<T> boundary);
   ~QuadTree();
@@ -27,7 +28,7 @@ public:
 
   void show(sf::RenderWindow *window, sf::Color color);
 
-private:
+ private:
   static unsigned int capacity;
   static QuadTree *root;
 
@@ -45,8 +46,8 @@ private:
 
   void clear();
 };
-} // namespace qt
+}  // namespace qt
 
 #include "quadtree.inl"
 
-#endif // QT_TREE_H
+#endif  // QT_TREE_H

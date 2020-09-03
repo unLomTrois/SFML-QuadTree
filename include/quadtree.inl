@@ -1,9 +1,11 @@
-template <typename T> unsigned int qt::QuadTree<T>::capacity = 4;
+template <typename T>
+unsigned int qt::QuadTree<T>::capacity = 4;
 
 template <typename T>
-inline qt::QuadTree<T> *qt::QuadTree<T>::root = nullptr; //корень
+inline qt::QuadTree<T> *qt::QuadTree<T>::root = nullptr;  //корень
 
-template <typename T> inline qt::QuadTree<T>::QuadTree() {}
+template <typename T>
+inline qt::QuadTree<T>::QuadTree() {}
 
 template <typename T>
 inline qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
@@ -14,7 +16,8 @@ inline qt::QuadTree<T>::QuadTree(qt::node<T> boundary) : boundary(boundary) {
   }
 }
 
-template <typename T> inline qt::QuadTree<T>::~QuadTree() {
+template <typename T>
+inline qt::QuadTree<T>::~QuadTree() {
   if (is_divided) {
     delete nw;
     delete ne;
@@ -24,7 +27,8 @@ template <typename T> inline qt::QuadTree<T>::~QuadTree() {
   points.clear();
 }
 
-template <typename T> inline void qt::QuadTree<T>::subdivide() {
+template <typename T>
+inline void qt::QuadTree<T>::subdivide() {
   is_divided = true;
 
   float x = boundary.x;
@@ -52,17 +56,17 @@ template <typename T> inline void qt::QuadTree<T>::subdivide() {
   points.clear();
 }
 
-template <typename T> inline bool qt::QuadTree<T>::insert(T *p) {
+template <typename T>
+inline bool qt::QuadTree<T>::insert(T *p) {
   bool ret = false;
 
   if (!boundary.containsPoint(*p)) {
-
   } else {
     if (!is_divided) {
       if (points.size() < capacity) {
         for (auto &&exP : points) {
           if (p->x == exP->x && p->y == exP->y) {
-            return false; // same pos
+            return false;  // same pos
           }
         }
 
@@ -82,7 +86,8 @@ template <typename T> inline bool qt::QuadTree<T>::insert(T *p) {
   return ret;
 }
 
-template <typename T> inline void qt::QuadTree<T>::update() {
+template <typename T>
+inline void qt::QuadTree<T>::update() {
   if (is_divided) {
     clear();
 
@@ -94,7 +99,8 @@ template <typename T> inline void qt::QuadTree<T>::update() {
   }
 }
 
-template <typename T> inline void qt::QuadTree<T>::clear() {
+template <typename T>
+inline void qt::QuadTree<T>::clear() {
   delete nw;
   delete ne;
   delete sw;
@@ -104,7 +110,8 @@ template <typename T> inline void qt::QuadTree<T>::clear() {
   points.clear();
 }
 
-template <typename T> inline void qt::QuadTree<T>::collide() {
+template <typename T>
+inline void qt::QuadTree<T>::collide() {
   if (is_divided) {
     nw->collide();
     ne->collide();
@@ -143,7 +150,6 @@ inline std::vector<T *> qt::QuadTree<T>::query(node<T> node) {
   std::vector<T *> ret;
 
   if (!boundary.intersectNode(node)) {
-
   } else {
     if (!is_divided) {
       for (auto &&point : points) {

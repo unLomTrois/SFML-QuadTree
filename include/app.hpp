@@ -10,19 +10,18 @@
 #include "quadtree.hpp"
 
 class app {
-public:
+ public:
   app(unsigned int w = 800, unsigned int h = 800);
   ~app();
 
   void base();
   void show();
-  void showNode(sf::RenderWindow *window, qt::node<qt::point> node,
-                sf::Color color);
+  void showNode(sf::RenderWindow *window, qt::node<qt::point> node, sf::Color color);
 
-private:
+ private:
   qt::node<qt::point> size;
   sf::RenderWindow *window;
   qt::QuadTree<qt::point> *qt;
 };
 
-#endif // APP_HPP
+#endif  // APP_HPP
