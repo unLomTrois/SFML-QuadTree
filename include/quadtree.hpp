@@ -9,44 +9,43 @@
 
 namespace qt {
 
-	template<typename T>
-	class QuadTree {
-		friend T;
-	public:
-		QuadTree();
-		QuadTree(node<T> boundary);
-		~QuadTree();
+template <typename T> class QuadTree {
+  friend T;
 
-		
-		//функции
-		bool insert(T *p);
-		void subdivide();
-		std::vector<T*> query(node<T> node);
+public:
+  QuadTree();
+  QuadTree(node<T> boundary);
+  ~QuadTree();
 
-		void update();
-		void collide();
+  //функции
+  bool insert(T *p);
+  void subdivide();
+  std::vector<T *> query(node<T> node);
 
-		void show(sf::RenderWindow *window, sf::Color color);
+  void update();
+  void collide();
 
-	private:
-		static unsigned int capacity;
-		static QuadTree *root;
+  void show(sf::RenderWindow *window, sf::Color color);
 
-		QuadTree *parent = this;
+private:
+  static unsigned int capacity;
+  static QuadTree *root;
 
-		//Потомки
-		QuadTree<T> *nw = nullptr;
-		QuadTree<T> *ne = nullptr;
-		QuadTree<T> *sw = nullptr;
-		QuadTree<T> *se = nullptr;
+  QuadTree *parent = this;
 
-		std::vector<T*> points;
-		node<T> boundary;
-		bool is_divided = false;
+  //Потомки
+  QuadTree<T> *nw = nullptr;
+  QuadTree<T> *ne = nullptr;
+  QuadTree<T> *sw = nullptr;
+  QuadTree<T> *se = nullptr;
 
-		void clear();
-	};
-}
+  std::vector<T *> points;
+  node<T> boundary;
+  bool is_divided = false;
+
+  void clear();
+};
+} // namespace qt
 
 #include "quadtree.inl"
 
