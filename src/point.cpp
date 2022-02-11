@@ -33,8 +33,13 @@ void qt::point::create(float x, float y) {
 }
 
 void qt::point::move() {
-  x += Random::get(-velocity, velocity);
-  y += Random::get(-velocity, velocity);
+  auto kek = sf::Vector2f(cos(direction), sin(direction));
+
+  x += kek.x;//Random::get(-velocity, velocity);
+  y += kek.y;//Random::get(-velocity, velocity);
+
+  direction += 0.01f + sin(y) + cos(x);
+
 
   if (!(x > 0 && x < 720 && y > 0 && y < 720)) {
     x = Random::get(10, 710);

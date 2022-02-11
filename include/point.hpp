@@ -10,6 +10,8 @@ namespace qt {
 struct point {
   float x, y;
 
+  float direction = 0;
+
   int radius = 5;
   float velocity = 1;
   bool is_collided;
