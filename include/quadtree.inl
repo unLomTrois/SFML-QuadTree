@@ -1,8 +1,9 @@
 template <typename T>
 unsigned int qt::QuadTree<T>::capacity = 4;
 
+// initial setting of root
 template <typename T>
-inline qt::QuadTree<T> *qt::QuadTree<T>::root = nullptr;  //корень
+inline qt::QuadTree<T> *qt::QuadTree<T>::root = nullptr;
 
 template <typename T>
 inline qt::QuadTree<T>::QuadTree() {}

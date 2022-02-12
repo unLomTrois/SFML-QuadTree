@@ -18,7 +18,6 @@ class QuadTree {
   QuadTree(node<T> boundary);
   ~QuadTree();
 
-  //функции
   bool insert(T *p);
   void subdivide();
   std::vector<T *> query(const node<T> &node);
@@ -30,19 +29,21 @@ class QuadTree {
 
  private:
   static unsigned int capacity;
+  bool is_divided = false;
+
+  std::vector<T *> points;
+  node<T> boundary;
+
+  // each leaf contains a pointer to the root, the very first quadtree node
   static QuadTree *root;
 
   QuadTree *parent = this;
 
-  //Потомки
+  // children
   QuadTree<T> *nw = nullptr;
   QuadTree<T> *ne = nullptr;
   QuadTree<T> *sw = nullptr;
   QuadTree<T> *se = nullptr;
-
-  std::vector<T *> points;
-  node<T> boundary;
-  bool is_divided = false;
 
   void clear();
 };
