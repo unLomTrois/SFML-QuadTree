@@ -14,7 +14,6 @@ application::application(const sf::VideoMode &window_size) {
 
   size = qt::node<qt::point>(0, 0, window_size.width, window_size.height);
 
-  // QT Init
   qt = new qt::QuadTree<qt::point>(
       qt::node<qt::point>(size.w / 2, size.h / 2, size.w / 2, size.h / 2));
 
@@ -34,26 +33,34 @@ void application::show() {
   while (window->isOpen()) {
     sf::Event event;
     while (window->pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        window->close();
+      switch (event.type) {
+        case sf::Event::Closed:
+          window->close();
+          break;
+        case sf::Event::MouseButtonPressed:
+          if (event.mouseButton.button == sf::Mouse::Left) {
+            qt::point::create(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
+          }
+          break;
+        case sf::Event::MouseMoved:
+          check.x = sf::Mouse::getPosition(*window).x;
+          check.y = sf::Mouse::getPosition(*window).y;
+          break;
+        case sf::Event::KeyPressed:
+          if (event.key.code == sf::Keyboard::C) {
+            showqt = !showqt;
+          }
+        default:
+          break;
       }
-
-      if (event.type == sf::Event::MouseButtonPressed) {
-        if (event.mouseButton.button == sf::Mouse::Left) {
-          qt::point::create(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
-        }
-      }
-
-      /*if (event.type == sf::Event::MouseMoved){
-        check.x = sf::Mouse::getPosition(*window).x;
-        check.y = sf::Mouse::getPosition(*window).y;
-      }*/
     }
 
     window->clear(sf::Color::Black);
 
-    // qt->show(window, sf::Color::Transparent);
-    // showNode(window, check, sf::Color::Cyan);
+    if (showqt) {
+      qt->show(window, sf::Color::Transparent);
+      showNode(window, check, sf::Color::Red);
+    }
 
     for (auto &&point : qt::point::points) {
       point->move();

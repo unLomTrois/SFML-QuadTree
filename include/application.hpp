@@ -21,6 +21,8 @@ class application {
   qt::node<qt::point> size;
   sf::RenderWindow *window;
   qt::QuadTree<qt::point> *qt;
+
+  bool showqt = false;
 };
 
 #endif  // APPLICATION_HPP
